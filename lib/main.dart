@@ -5,16 +5,20 @@ import 'package:yyyyyyyyy/view/ListTypeModelView.dart';
 import 'package:yyyyyyyyy/view/putViewScreen.dart';
 import 'package:yyyyyyyyy/view/simpleTypemodelView.dart';
 import 'package:yyyyyyyyy/view/singupScreen.dart';
+import 'package:yyyyyyyyy/view/uploadImageView.dart';
 import 'package:yyyyyyyyy/viewmodel/patchApiViewModel.dart';
 import 'package:yyyyyyyyy/viewmodel/putlistviewModel.dart';
 import 'package:yyyyyyyyy/viewmodel/signupViewModel.dart';
 import 'package:yyyyyyyyy/viewmodel/simpleTypeApiVm.dart';
+import 'package:yyyyyyyyy/viewmodel/uploadImageViewModel.dart';
 import 'package:yyyyyyyyy/viewmodel/userListViewModel.dart';
 
 import 'storage/storage_helper.dart';
+import 'view/deleteview.dart';
 import 'view/patchViewScreen.dart';
 import 'view/userlistView.dart';
 import 'viewmodel/ListAPIpostViewmodel.dart';
+import 'viewmodel/deleteApiViewModel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +51,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => PatchProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => DeleteProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UploadImageProvider(),
+        ),
       ],
       child: GetMaterialApp(
         title: 'Flutter Demo',
@@ -58,7 +68,10 @@ class MyApp extends StatelessWidget {
         //     ? SignUpView()
         //     : HomePage(),
         // home: SignUpView(),
-        home: PatchViewScreen(),
+        // home: PatchViewScreen(),
+        home: UploadImageView(),
+        // home: HomePage(),
+        // home: Deleteview(),
       ),
     );
   }

@@ -20,22 +20,6 @@ class http_Hepler {
     }
   }
 
-//   Future<dynamic> getApiMode(
-//       {required String url, bool isRequiredAuthorizetion = false}) async {
-//     try {
-//       final apiresponse = await http.get(Uri.parse(url),
-//           headers: header(isRequiredAuthorizetion));
-
-//       printvalue(url, tag: "Api get url");
-//       printvalue(header(isRequiredAuthorizetion), tag: "api Header");
-//       printvalue(apiresponse.body, tag: "Api response");
-//       return _returenResponse(apiresponse);
-//     } catch (e) {
-//       print(e);
-//     }
-//   }
-// }
-
 //getApi
   Future<dynamic> getApi({
     required String url,
@@ -122,6 +106,56 @@ class http_Hepler {
       return _returenResponse(apiresponse);
     } on SocketException {
       return null;
+    }
+  }
+
+  Future<dynamic> deleteApi(
+      {required String url,
+      Object? requestBody,
+      bool isRequireAuthorization = false}) async {
+    try {
+      http.Response apiresponse;
+      if (requestBody == null) {
+        apiresponse = await http.delete(Uri.parse(url),
+            headers: header(isRequireAuthorization));
+      } else {
+        apiresponse = await http.delete(Uri.parse(url),
+            body: jsonEncode(requestBody),
+            headers: header(isRequireAuthorization));
+      }
+      printvalue(url, tag: "Api Get url: ");
+      printvalue(header(isRequireAuthorization), tag: "Api Header: ");
+      printvalue(apiresponse.body, tag: "Api Response");
+      printvalue(requestBody, tag: "Api resonse body");
+      return _returenResponse(apiresponse);
+    } on SocketException {
+      return null;
+    }
+  }
+
+  //multipart api handle
+  Future<dynamic> uploadImage(
+      {required File imageFile, required String url}) async {
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.headers.addAll({"Content-Type": "multipart/form-data"});
+
+      request.files.add(
+        await http.MultipartFile.fromPath('file', imageFile.path,
+            filename: imageFile.path.split("/").last),
+      );
+
+      var streamedResponse = await request.send();
+      http.Response response = await http.Response.fromStream(streamedResponse);
+
+      printvalue(url, tag: "Api Get url: ");
+      printvalue({"Content-Type": "multipart/form-data"}, tag: "Api Header: ");
+      printvalue(response.body, tag: "Api Response");
+      return _returenResponse(response);
+    } on SocketException {
+      print('Error: No internet connection');
+    } catch (e) {
+      print('Error: $e');
     }
   }
 }
