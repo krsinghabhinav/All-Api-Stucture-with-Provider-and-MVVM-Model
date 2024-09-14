@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:yyyyyyyyy/view/ListTypeModelView.dart';
+import 'package:yyyyyyyyy/view/dynamicListView.dart';
 import 'package:yyyyyyyyy/view/putViewScreen.dart';
 import 'package:yyyyyyyyy/view/simpleTypemodelView.dart';
 import 'package:yyyyyyyyy/view/singupScreen.dart';
 import 'package:yyyyyyyyy/view/uploadImageView.dart';
+import 'package:yyyyyyyyy/viewmodel/dynamicListVM.dart';
 import 'package:yyyyyyyyy/viewmodel/patchApiViewModel.dart';
 import 'package:yyyyyyyyy/viewmodel/putlistviewModel.dart';
 import 'package:yyyyyyyyy/viewmodel/signupViewModel.dart';
@@ -57,6 +59,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => UploadImageProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => CountryProvider(),
+        ),
       ],
       child: GetMaterialApp(
         title: 'Flutter Demo',
@@ -69,7 +74,7 @@ class MyApp extends StatelessWidget {
         //     : HomePage(),
         // home: SignUpView(),
         // home: PatchViewScreen(),
-        home: UploadImageView(),
+        home: CountriesListView(),
         // home: HomePage(),
         // home: Deleteview(),
       ),

@@ -47,6 +47,7 @@ class UserlistviewmodelProvider with ChangeNotifier {
     try {
       await _userlistRepo.getusermodelRepo().then((value) {
         setUserListVM(ApiResponse.completed(value));
+        print("print view modal...........................$value");
         isLoading = false;
         notifyListeners();
       });
