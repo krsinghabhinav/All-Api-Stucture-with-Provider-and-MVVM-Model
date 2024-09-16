@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:yyyyyyyyy/jwt.dart';
 import 'package:yyyyyyyyy/view/ListTypeModelView.dart';
 import 'package:yyyyyyyyy/view/dynamicListView.dart';
 import 'package:yyyyyyyyy/view/putViewScreen.dart';
@@ -23,6 +24,8 @@ import 'viewmodel/ListAPIpostViewmodel.dart';
 import 'viewmodel/deleteApiViewModel.dart';
 
 void main() async {
+  final authSigner = AuthSigner();
+  final jwt = authSigner.createJwt();
   WidgetsFlutterBinding.ensureInitialized();
   await StorageHelper.instance.init(); // Initialize SharedPreferences
   runApp(MyApp());
