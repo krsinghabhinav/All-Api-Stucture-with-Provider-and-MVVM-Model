@@ -37,7 +37,37 @@ class http_Hepler {
     }
   }
 
-  Future<dynamic> getApiJWT({
+  // Future<dynamic> getApiJWT({
+  //   required String url,
+  //   required String jwtToken,
+  // }) async {
+  //   try {
+  //     // Making the GET request with JWT in the header
+  //     final apiResponse = await http.get(
+  //       Uri.parse(url),
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'Bearer $jwtToken',
+  //       },
+  //     );
+
+  //     // Logging for debugging purposes
+  //     print("API Get URL: $url");
+  //     print("API Header (JWT): $jwtToken");
+  //     print("API Response: ${apiResponse.body}");
+
+  //     // Handle and return the response
+  //     return _returenResponse(apiResponse);
+  //   } on SocketException {
+  //     print("No Internet connection");
+  //     return null; // Handle this case as needed in your app
+  //   } catch (e) {
+  //     print("Error occurred: $e");
+  //     return null; // Handle any other exceptions
+  //   }
+  // }
+
+  Future<dynamic> getApiModel({
     required String url,
     required String jwtToken,
   }) async {
@@ -87,6 +117,42 @@ class http_Hepler {
       printvalue(requestBody, tag: "Api resonse body");
       return _returenResponse(apiresponse);
     } on SocketException {
+      return null;
+    }
+  }
+
+  Future<dynamic> postApi({
+    required String url,
+    required String jwtToken,
+    Object? requestBody,
+  }) async {
+    try {
+      // Log the URL and token at the start
+      print("Api Get url: $url");
+      print("API Header (JWT): $jwtToken");
+
+      // Sending the POST request
+      http.Response apiresponse = await http.post(
+        Uri.parse(url),
+        body: requestBody != null ? jsonEncode(requestBody) : null,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $jwtToken',
+        },
+      );
+
+      // Print only the required values once
+      print("Api Response: ${apiresponse.body}");
+
+      // Print the request body if it exists
+      if (requestBody != null) {
+        print("Api Request Body: $requestBody");
+      }
+
+      // Return the processed response
+      return _returenResponse(apiresponse);
+    } on SocketException {
+      // Handle network errors
       return null;
     }
   }
