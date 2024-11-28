@@ -26,14 +26,20 @@ class http_Hepler {
     bool isRequireAuthorization = false,
   }) async {
     try {
-      final apirespnse = await http.get(Uri.parse(url),
-          headers: header(isRequireAuthorization));
+      final apirespnse = await http
+          .get(Uri.parse(url), headers: header(isRequireAuthorization))
+          .timeout(Duration(seconds: 20));
       printvalue(url, tag: "Api Get url: ");
       printvalue(header(isRequireAuthorization), tag: "Api Header: ");
       printvalue(apirespnse.body, tag: "Api Response");
       return _returenResponse(apirespnse);
     } on SocketException {
+      print("No Internet connection");
+
       return null;
+    } catch (e) {
+      print("Error occurred: $e");
+      return null; // Handle any other exceptions
     }
   }
 
@@ -76,7 +82,7 @@ class http_Hepler {
       final apiResponse = await http.get(
         Uri.parse(url),
         headers: {
-          'Content-Type': 'application/json',
+            
           'Authorization': 'Bearer $jwtToken',
         },
       );
